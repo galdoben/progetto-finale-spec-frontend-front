@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ChicchiList from './pages/ChicchiList';
+import ChicchiDetail from './pages/ChicchiDetail';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         
         <Routes>
           <Route path="/" element={<ChicchiList />} />
+          <Route path="/chicco/:id" element={<ChicchiDetail />} />
         </Routes>
       </div>
     </Router>

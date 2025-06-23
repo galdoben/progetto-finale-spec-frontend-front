@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { chicchiApi } from '../services/chicchiApi';
+import { Link } from 'react-router-dom';
 
 function ChicchiList() {
   const [data, setData] = useState([]);
@@ -95,7 +96,9 @@ function ChicchiList() {
             <h3>{chicco.title}</h3>
             <p className="category">{chicco.category}</p>
             <div className="card-actions">
-              <button className="btn-details">Dettagli</button>
+                <Link to={`/chicco/${chicco.id}`}>
+                <button className="btn-details">Dettagli</button>
+                </Link>
               <button className="btn-compare">Confronta</button>
               <button className="btn-favorite">❤️</button>
             </div>
