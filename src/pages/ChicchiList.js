@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { chicchiApi } from "../services/chicchiApi";
 import { Link } from "react-router-dom";
 
-function ChicchiList({ favoriti, toggleFavorito }) {
+function ChicchiList({
+  favoriti,
+  toggleFavorito,
+  confronto,
+  aggiungiConfronto,
+}) {
   // AGGIUNTE LE PROPS
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -112,7 +117,12 @@ function ChicchiList({ favoriti, toggleFavorito }) {
               <Link to={`/chicco/${chicco.id}`}>
                 <button className="btn-details">Dettagli</button>
               </Link>
-              <button className="btn-compare">Confronta</button>
+              <button
+                className="btn-compare"
+                onClick={() => aggiungiConfronto(chicco)}
+              >
+                Confronta
+              </button>
               <button
                 className={`btn-favorite ${
                   isFavorito(chicco) ? "favorito" : ""

@@ -5,23 +5,14 @@ import ChicchiDetail from "./pages/ChicchiDetail";
 import "./App.css";
 
 function App() {
-  // STATO PER I FAVORITI
+  // stato per i favoriti
   const [favoriti, setFavoriti] = useState([]);
 
-  // FUNZIONE PER GESTIRE I FAVORITI
+  // stato per confronto (max 2 chicchi)
+  const [confronto, setConfronto] = useState([]);
+
+  // funzione per gestire i favoriti
   const toggleFavorito = (chicco) => {
-    console.log("DEBUG - chicco ricevuto:", chicco);
-    console.log("DEBUG - favoriti attuali:", favoriti);
-    console.log("DEBUG - tipo ID chicco:", typeof chicco.id, chicco.id);
-
-    if (favoriti.length > 0) {
-      console.log(
-        "DEBUG - tipo ID favorito:",
-        typeof favoriti[0].id,
-        favoriti[0].id
-      );
-    }
-
     console.log("toggle favorito per:", chicco.title);
     let nuoviFavoriti = [...favoriti];
     let index = nuoviFavoriti.findIndex((f) => f.id == chicco.id);
@@ -37,6 +28,38 @@ function App() {
     setFavoriti(nuoviFavoriti);
   };
 
+  // funzione per aggiungere al confronto
+  const aggiungiConfronto = (chicco) => {
+    console.log("=== DEBUG CONFRONTO ===");
+    console.log("Chicco ricevuto:", chicco);
+    console.log("ID chicco:", chicco.id, "tipo:", typeof chicco.id);
+    console.log("Confronto attuale:", confronto);
+    console.log("Lunghezza confronto:", confronto.length);
+    console.log("voglio confrontare:", chicco.title);
+
+    // controllo se ho già 2 chicchi
+    if (confronto.length >= 2) {
+      console.log("ERRORE: già 2 chicchi nel confronto");
+      alert("Puoi confrontare solo 2 chicchi alla volta!");
+      return;
+    }
+
+    // controllo se questo chicco è già nel confronto
+    let presente = confronto.find((c) => {
+      console.log("Controllo ID:", c.id, "vs", chicco.id);
+      return c.id == chicco.id; // usa == invece di ===
+    });
+    if (presente) {
+      console.log("ERRORE: chicco già presente");
+      alert("Questo chicco è già nel confronto!");
+      return;
+    }
+
+    // aggiungo al confronto
+    console.log("Aggiungo al confronto:", chicco.title);
+    setConfronto([...confronto, chicco]);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -44,7 +67,9 @@ function App() {
           <Link to="/" className="logo">
             ☕ Comparatore Chicchi
           </Link>
-          <div className="nav-info">Favoriti: {favoriti.length}</div>
+          <div className="nav-info">
+            Favoriti: {favoriti.length} | Confronto: {confronto.length}/2
+          </div>
         </nav>
 
         <Routes>
@@ -54,6 +79,8 @@ function App() {
               <ChicchiList
                 favoriti={favoriti}
                 toggleFavorito={toggleFavorito}
+                confronto={confronto}
+                aggiungiConfronto={aggiungiConfronto}
               />
             }
           />
@@ -63,6 +90,8 @@ function App() {
               <ChicchiDetail
                 favoriti={favoriti}
                 toggleFavorito={toggleFavorito}
+                confronto={confronto}
+                aggiungiConfronto={aggiungiConfronto}
               />
             }
           />

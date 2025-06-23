@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { chicchiApi } from "../services/chicchiApi";
 
-function ChicchiDetail({ favoriti, toggleFavorito }) {
+function ChicchiDetail({
+  favoriti,
+  toggleFavorito,
+  confronto,
+  aggiungiConfronto,
+}) {
   // LE PROPS
   const { id } = useParams();
   const [chicco, setChicco] = useState(null);
@@ -100,7 +105,12 @@ function ChicchiDetail({ favoriti, toggleFavorito }) {
           >
             {isFavorito() ? "❤️" : "🤍"} Preferiti
           </button>
-          <button className="btn-compare-detail">⚖️ Confronta</button>
+          <button
+            className="btn-compare-detail"
+            onClick={() => aggiungiConfronto(chicco)}
+          >
+            ⚖️ Confronta
+          </button>
         </div>
       </div>
     </div>
