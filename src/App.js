@@ -10,9 +10,21 @@ function App() {
 
   // FUNZIONE PER GESTIRE I FAVORITI
   const toggleFavorito = (chicco) => {
+    console.log("DEBUG - chicco ricevuto:", chicco);
+    console.log("DEBUG - favoriti attuali:", favoriti);
+    console.log("DEBUG - tipo ID chicco:", typeof chicco.id, chicco.id);
+
+    if (favoriti.length > 0) {
+      console.log(
+        "DEBUG - tipo ID favorito:",
+        typeof favoriti[0].id,
+        favoriti[0].id
+      );
+    }
+
     console.log("toggle favorito per:", chicco.title);
     let nuoviFavoriti = [...favoriti];
-    let index = nuoviFavoriti.findIndex((f) => f.id === chicco.id);
+    let index = nuoviFavoriti.findIndex((f) => f.id == chicco.id);
 
     if (index >= 0) {
       nuoviFavoriti.splice(index, 1);
