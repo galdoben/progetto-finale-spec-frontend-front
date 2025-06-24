@@ -194,3 +194,47 @@ body {
   margin-bottom: 20px;
   display: inline-block;
 }
+
+/*modal*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.confronto-grid {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.chicco-card-modal {
+  flex: 1;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.vs-badge {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff6b35;
+  align-self: center;
+}
