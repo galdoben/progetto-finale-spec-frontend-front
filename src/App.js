@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ChicchiList from "./pages/ChicchiList";
 import ChicchiDetail from "./pages/ChicchiDetail";
 import "./App.css";
+import ModalConfronto from "./components/ModalConfronto";
 
 function App() {
   // stato per i favoriti
@@ -10,6 +11,9 @@ function App() {
 
   // stato per confronto (max 2 chicchi)
   const [confronto, setConfronto] = useState([]);
+
+  // stato per il modal di confronto
+  const [modalOpen, setModalOpen] = useState(false);
 
   // funzione per gestire i favoriti
   const toggleFavorito = (chicco) => {
@@ -30,34 +34,29 @@ function App() {
 
   // funzione per aggiungere al confronto
   const aggiungiConfronto = (chicco) => {
-    console.log("=== DEBUG CONFRONTO ===");
-    console.log("Chicco ricevuto:", chicco);
-    console.log("ID chicco:", chicco.id, "tipo:", typeof chicco.id);
-    console.log("Confronto attuale:", confronto);
-    console.log("Lunghezza confronto:", confronto.length);
     console.log("voglio confrontare:", chicco.title);
 
     // controllo se ho già 2 chicchi
     if (confronto.length >= 2) {
-      console.log("ERRORE: già 2 chicchi nel confronto");
       alert("Puoi confrontare solo 2 chicchi alla volta!");
       return;
     }
 
     // controllo se questo chicco è già nel confronto
-    let presente = confronto.find((c) => {
-      console.log("Controllo ID:", c.id, "vs", chicco.id);
-      return c.id == chicco.id; // usa == invece di ===
-    });
+    let presente = confronto.find((c) => c.id == chicco.id);
     if (presente) {
-      console.log("ERRORE: chicco già presente");
       alert("Questo chicco è già nel confronto!");
       return;
     }
 
     // aggiungo al confronto
-    console.log("Aggiungo al confronto:", chicco.title);
-    setConfronto([...confronto, chicco]);
+    let nuovoConfronto = [...confronto, chicco];
+    setConfronto(nuovoConfronto);
+
+    // se ho 2 chicchi, apro il modal automaticamente
+    if (nuovoConfronto.length === 2) {
+      setModalOpen(true);
+    }
   };
 
   return (
@@ -69,6 +68,14 @@ function App() {
           </Link>
           <div className="nav-info">
             Favoriti: {favoriti.length} | Confronto: {confronto.length}/2
+            {confronto.length === 2 && (
+              <button
+                className="btn-confronto"
+                onClick={() => setModalOpen(true)}
+              >
+                Vedi confronto!
+              </button>
+            )}
           </div>
         </nav>
 
@@ -96,6 +103,14 @@ function App() {
             }
           />
         </Routes>
+
+        {/* Modal per il confronto */}
+        <ModalConfronto
+          confronto={confronto}
+          setConfronto={setConfronto}
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+        />
       </div>
     </Router>
   );
