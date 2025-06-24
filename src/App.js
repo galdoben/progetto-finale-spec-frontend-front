@@ -4,6 +4,7 @@ import ChicchiList from "./pages/ChicchiList";
 import ChicchiDetail from "./pages/ChicchiDetail";
 import "./App.css";
 import ModalConfronto from "./components/ModalConfronto";
+import SidebarFavoriti from "./components/SidebarFavoriti";
 
 function App() {
   // stato per i favoriti
@@ -14,6 +15,9 @@ function App() {
 
   // stato per il modal di confronto
   const [modalOpen, setModalOpen] = useState(false);
+
+  // stato per la sidebar favoriti
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // funzione per gestire i favoriti
   const toggleFavorito = (chicco) => {
@@ -67,7 +71,14 @@ function App() {
             ☕ Comparatore Chicchi
           </Link>
           <div className="nav-info">
-            Favoriti: {favoriti.length} | Confronto: {confronto.length}/2
+            {/* Pulsante per aprire i favoriti */}
+            <button
+              className="btn-favoriti"
+              onClick={() => setSidebarOpen(true)}
+            >
+              ❤️ {favoriti.length}
+            </button>
+            | Confronto: {confronto.length}/2
             {confronto.length === 2 && (
               <button
                 className="btn-confronto"
@@ -110,6 +121,15 @@ function App() {
           setConfronto={setConfronto}
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
+        />
+
+        {/* Sidebar per i favoriti */}
+        <SidebarFavoriti
+          favoriti={favoriti}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          toggleFavorito={toggleFavorito}
+          aggiungiConfronto={aggiungiConfronto}
         />
       </div>
     </Router>
