@@ -1,11 +1,9 @@
-/* COLORI BASE */
 body {
   background: linear-gradient(to bottom, #f5e6d3, #deb887);
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
-/* HEADER */
 .navbar {
   background: #8b4513;
   padding: 20px;
@@ -19,7 +17,6 @@ body {
   text-decoration: none;
 }
 
-/* CONTAINER PRINCIPALE */
 .chicchi-container {
   max-width: 1200px;
   margin: 20px auto;
@@ -34,7 +31,6 @@ body {
   margin-bottom: 30px;
 }
 
-/* FILTRI */
 .filters {
   background: #cd853f;
   padding: 20px;
@@ -60,37 +56,54 @@ body {
   min-width: 200px;
 }
 
-/* GRIGLIA CHICCHI */
 .chicchi-grid {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  align-items: start;
 }
 
-/* SINGOLA CARD */
-.chicco-card {
+.chicco-card-bg {
   border: 3px solid #cd853f;
   border-radius: 15px;
-  padding: 25px;
-  background: #f5e6d3;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px;
+  position: relative;
   box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
   transition: all 0.3s ease;
-  min-height: 200px;
 }
 
-.chicco-card:hover {
+.chicco-card-bg:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(139, 69, 19, 0.5);
-  background: #fff;
 }
 
-.chicco-card h3 {
-  color: #5d2e0a;
+.chicco-overlay {
+  background: rgba(139, 69, 19, 0.85);
+  padding: 25px;
+  border-radius: 12px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+  transition: all 0.3s ease;
+}
+
+.chicco-card-bg:hover .chicco-overlay {
+  background: rgba(139, 69, 19, 0.2);
+}
+
+.chicco-overlay h3 {
+  color: #f5e6d3;
   font-size: 18px;
   margin: 0 0 10px 0;
+  font-weight: bold;
 }
 
-.category {
+.chicco-overlay .category {
   background: #daa520;
   color: #5d2e0a;
   padding: 5px 12px;
@@ -99,9 +112,14 @@ body {
   display: inline-block;
   margin-bottom: 15px;
   font-weight: bold;
+  width: fit-content;
 }
 
-/* BOTTONI */
+.chicco-card-bg:hover .chicco-overlay h3,
+.chicco-card-bg:hover .chicco-overlay .category {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
 .card-actions {
   display: flex;
   gap: 8px;
@@ -144,12 +162,10 @@ body {
   transform: scale(1.1);
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .chicchi-grid {
     grid-template-columns: 100%;
   }
-
   .filters {
     flex-direction: column;
   }
@@ -161,7 +177,6 @@ body {
   }
 }
 
-/* STATI LOADING/ERROR */
 .loading,
 .error {
   text-align: center;
@@ -180,7 +195,6 @@ body {
   padding: 20px;
 }
 
-/* PAGINA DETTAGLIO */
 .detail-container {
   max-width: 800px;
   margin: 20px auto;
@@ -195,7 +209,6 @@ body {
   display: inline-block;
 }
 
-/*modal*/
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -239,27 +252,23 @@ body {
   align-self: center;
 }
 
-/* === SIDEBAR FAVORITI CON COLORI CALDI === */
-
-/* Overlay scuro di sfondo */
 .sidebar-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(139, 69, 19, 0.7); /* Marrone caldo invece di nero */
+  background: rgba(139, 69, 19, 0.7);
   z-index: 1000;
 }
 
-/* La sidebar che scorre da destra */
 .sidebar-favoriti {
   position: fixed;
   top: 0;
   right: 0;
   width: 350px;
   height: 100vh;
-  background: #f5e6d3; /* Il tuo beige caldo */
+  background: #f5e6d3;
   box-shadow: -2px 0 10px rgba(139, 69, 19, 0.3);
   z-index: 1001;
   display: flex;
@@ -267,7 +276,6 @@ body {
   animation: slideIn 0.3s ease-out;
 }
 
-/* Animazione di entrata */
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -277,19 +285,18 @@ body {
   }
 }
 
-/* Header della sidebar */
 .sidebar-header {
   padding: 20px;
-  border-bottom: 2px solid #cd853f; /* Il tuo marrone chiaro */
+  border-bottom: 2px solid #cd853f;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #8b4513; /* Il tuo marrone scuro come navbar */
+  background: #8b4513;
 }
 
 .sidebar-header h2 {
   margin: 0;
-  color: #f5e6d3; /* Beige chiaro come logo */
+  color: #f5e6d3;
   font-size: 20px;
 }
 
@@ -298,28 +305,26 @@ body {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #f5e6d3; /* Beige chiaro */
+  color: #f5e6d3;
   padding: 5px;
   border-radius: 50%;
   transition: background 0.2s;
 }
 
 .close-btn:hover {
-  background: rgba(245, 230, 211, 0.2); /* Beige trasparente */
+  background: rgba(245, 230, 211, 0.2);
 }
 
-/* Contenuto della sidebar */
 .sidebar-content {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background: #f5e6d3; /* Beige caldo */
+  background: #f5e6d3;
 }
 
-/* Messaggio quando non ci sono favoriti */
 .no-favorites {
   text-align: center;
-  color: #5d2e0a; /* Il tuo marrone scuro */
+  color: #5d2e0a;
   margin-top: 50px;
 }
 
@@ -327,19 +332,17 @@ body {
   margin: 10px 0;
 }
 
-/* Lista dei favoriti */
 .favorites-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Card di ogni favorito */
 .favorite-card {
-  border: 2px solid #cd853f; /* Il tuo marrone chiaro */
+  border: 2px solid #cd853f;
   border-radius: 10px;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.9); /* Bianco trasparente come container */
+  background: rgba(255, 255, 255, 0.9);
   transition: all 0.3s ease;
 }
 
@@ -351,12 +354,12 @@ body {
 
 .favorite-card h3 {
   margin: 0 0 5px 0;
-  color: #5d2e0a; /* Il tuo marrone scuro */
+  color: #5d2e0a;
   font-size: 16px;
 }
 
 .favorite-category {
-  background: #daa520; /* Il tuo oro come category */
+  background: #daa520;
   color: #5d2e0a;
   font-size: 12px;
   padding: 3px 8px;
@@ -366,7 +369,6 @@ body {
   font-weight: bold;
 }
 
-/* Bottoni delle azioni */
 .favorite-actions {
   display: flex;
   gap: 8px;
@@ -374,7 +376,7 @@ body {
 }
 
 .btn-dettaglio {
-  background: #228b22; /* Il tuo verde */
+  background: #228b22;
   color: white;
   padding: 6px 12px;
   border-radius: 15px;
@@ -391,7 +393,7 @@ body {
 }
 
 .btn-confronto-small {
-  background: #e2725b; /* Il tuo arancione/rosso */
+  background: #e2725b;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -406,8 +408,8 @@ body {
 }
 
 .btn-rimuovi {
-  background: #cd853f; /* Il tuo marrone chiaro */
-  color: #5d2e0a; /* Testo scuro */
+  background: #cd853f;
+  color: #5d2e0a;
   border: none;
   padding: 6px 10px;
   border-radius: 15px;
@@ -418,33 +420,114 @@ body {
 
 .btn-rimuovi:hover {
   transform: scale(1.1);
-  background: #8b4513; /* Marrone più scuro */
-  color: #f5e6d3; /* Testo chiaro */
+  background: #8b4513;
+  color: #f5e6d3;
 }
 
-/* Pulsante favoriti nella navbar */
 .btn-favoriti {
-  background: rgba(245, 230, 211, 0.2); /* Beige trasparente */
-  border: 2px solid #cd853f; /* Bordo marrone chiaro */
+  background: rgba(245, 230, 211, 0.2);
+  border: 2px solid #cd853f;
   padding: 8px 12px;
   border-radius: 15px;
   cursor: pointer;
-  color: #f5e6d3; /* Testo beige chiaro */
+  color: #f5e6d3;
   margin-right: 10px;
   transition: all 0.2s;
   font-weight: bold;
 }
 
 .btn-favoriti:hover {
-  background: #f5e6d3; /* Beige pieno */
-  color: #5d2e0a; /* Testo marrone scuro */
+  background: #f5e6d3;
+  color: #5d2e0a;
   transform: scale(1.05);
 }
 
-/* Responsive per mobile */
 @media (max-width: 768px) {
   .sidebar-favoriti {
     width: 90%;
     right: 5%;
   }
+}
+
+.footer {
+  background: #8b4513;
+  color: #f5e6d3;
+  margin-top: 50px;
+  padding: 40px 0 0 0;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  padding: 0 20px;
+}
+
+.footer-section h3 {
+  color: #daa520;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.footer-section h4 {
+  color: #f5e6d3;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.footer-section p {
+  color: #f5e6d3;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  color: #f5e6d3;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-section ul li a:hover {
+  color: #daa520;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-link {
+  color: #f5e6d3;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.social-link:hover {
+  color: #daa520;
+}
+
+.footer-bottom {
+  background: #5d2e0a;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: #f5e6d3;
+  font-size: 14px;
 }

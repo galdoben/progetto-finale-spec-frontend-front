@@ -2,13 +2,27 @@ import React, { useState, useEffect } from "react";
 import { chicchiApi } from "../services/chicchiApi";
 import { Link } from "react-router-dom";
 
+const coffeeImages = [
+  "/images/chicchi.1.jpg",
+  "/images/chicchi.2.jpg",
+  "/images/chicchi.3.webp",
+  "/images/chicchi.4.png",
+  "/images/chicchi-5.jpg",
+  "/images/chicchi.6.jpeg",
+  "/images/chicchi.7.jpg",
+  "/images/chicchi.8.jpg",
+  "/images/chicchi.9.jpg",
+  "/images/chicchi.10.png",
+  "/images/chicchi.11.jpg",
+  "/images/chicchi.12.webp",
+];
+
 function ChicchiList({
   favoriti,
   toggleFavorito,
   confronto,
   aggiungiConfronto,
 }) {
-  // AGGIUNTE LE PROPS
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -36,12 +50,10 @@ function ChicchiList({
     }
   };
 
-  // FUNZIONE PER CONTROLLARE SE È NEI FAVORITI
   const isFavorito = (chicco) => {
     return favoriti.some((f) => f.id === chicco.id);
   };
 
-  // filtro e ordinamento
   let filtered = data.filter((item) => {
     let searchMatch = item.title.toLowerCase().includes(search.toLowerCase());
     let categoryMatch =
@@ -49,7 +61,6 @@ function ChicchiList({
     return searchMatch && categoryMatch;
   });
 
-  // ordinamento
   filtered.sort((a, b) => {
     let valA = a[sort].toLowerCase();
     let valB = b[sort].toLowerCase();
@@ -60,7 +71,6 @@ function ChicchiList({
     }
   });
 
-  // categorie uniche
   const uniqueCategories = [...new Set(data.map((item) => item.category))];
 
   if (isLoading) return <div className="loading">Caricando...</div>;
@@ -110,27 +120,37 @@ function ChicchiList({
 
       <div className="chicchi-grid">
         {filtered.map((chicco) => (
-          <div key={chicco.id} className="chicco-card">
-            <h3>{chicco.title}</h3>
-            <p className="category">{chicco.category}</p>
-            <div className="card-actions">
-              <Link to={`/chicco/${chicco.id}`}>
-                <button className="btn-details">Dettagli</button>
-              </Link>
-              <button
-                className="btn-compare"
-                onClick={() => aggiungiConfronto(chicco)}
-              >
-                Confronta
-              </button>
-              <button
-                className={`btn-favorite ${
-                  isFavorito(chicco) ? "favorito" : ""
-                }`}
-                onClick={() => toggleFavorito(chicco)}
-              >
-                {isFavorito(chicco) ? "❤️" : "🤍"}
-              </button>
+          <div
+            key={chicco.id}
+            className="chicco-card-bg"
+            style={{
+              backgroundImage: `url(${
+                coffeeImages[chicco.id % coffeeImages.length]
+              })`,
+            }}
+          >
+            <div className="chicco-overlay">
+              <h3>{chicco.title}</h3>
+              <p className="category">{chicco.category}</p>
+              <div className="card-actions">
+                <Link to={`/chicco/${chicco.id}`}>
+                  <button className="btn-details">Dettagli</button>
+                </Link>
+                <button
+                  className="btn-compare"
+                  onClick={() => aggiungiConfronto(chicco)}
+                >
+                  Confronta
+                </button>
+                <button
+                  className={`btn-favorite ${
+                    isFavorito(chicco) ? "favorito" : ""
+                  }`}
+                  onClick={() => toggleFavorito(chicco)}
+                >
+                  {isFavorito(chicco) ? "❤️" : "🤍"}
+                </button>
+              </div>
             </div>
           </div>
         ))}

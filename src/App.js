@@ -114,6 +114,54 @@ function App() {
             }
           />
         </Routes>
+        <footer className="footer">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h3>☕ Comparatore Chicchi</h3>
+              <p>
+                Il miglior tool per confrontare e scegliere i chicchi di caffè
+                perfetti per te!
+              </p>
+            </div>
+
+            <div className="footer-section">
+              <h4>Navigazione</h4>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <a href="#about">Chi Siamo</a>
+                </li>
+                <li>
+                  <a href="#contact">Contatti</a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="footer-section">
+              <h4>Social</h4>
+              <div className="social-links">
+                <a href="#" className="social-link">
+                  📘 Facebook
+                </a>
+                <a href="#" className="social-link">
+                  📷 Instagram
+                </a>
+                <a href="#" className="social-link">
+                  🐦 Twitter
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <p>
+              &copy; 2025 Comparatore Chicchi. Fatto con ❤️ per gli amanti del
+              caffè
+            </p>
+          </div>
+        </footer>
 
         {/* Modal per il confronto */}
         <ModalConfronto
