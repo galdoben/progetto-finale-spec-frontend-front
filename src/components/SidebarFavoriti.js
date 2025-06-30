@@ -8,6 +8,7 @@ function SidebarFavoriti({
   onClose,
   toggleFavorito,
   aggiungiConfronto,
+  confronto,
 }) {
   // se non è aperta non mostro niente
   if (!isOpen) return null;
@@ -39,7 +40,15 @@ function SidebarFavoriti({
             // Lista dei favoriti
             <div className="favorites-list">
               {favoriti.map((chicco) => (
-                <div key={chicco.id} className="favorite-card">
+                <div
+                  key={chicco.id}
+                  className={`favorite-card ${
+                    Array.isArray(confronto) &&
+                    confronto.some((c) => c.id === chicco.id)
+                      ? "in-confronto"
+                      : ""
+                  }`}
+                >
                   <h3>{chicco.title}</h3>
                   <p className="favorite-category">{chicco.category}</p>
 

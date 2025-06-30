@@ -36,30 +36,48 @@ function App() {
     setFavoriti(nuoviFavoriti);
   };
 
-  // funzione per aggiungere al confronto
-  const aggiungiConfronto = (chicco) => {
+  const aggiungiConfronto = async (chicco) => {
     console.log("voglio confrontare:", chicco.title);
 
-    // controllo se ho già 2 chicchi
     if (confronto.length >= 2) {
-      alert("Puoi confrontare solo 2 chicchi alla volta!");
+      // Se già ci sono 2 chicchi, apro la modal ma non chiudo la sidebar
+      setModalOpen(true);
       return;
     }
 
-    // controllo se questo chicco è già nel confronto
     let presente = confronto.find((c) => c.id == chicco.id);
     if (presente) {
       alert("Questo chicco è già nel confronto!");
       return;
     }
 
-    // aggiungo al confronto
-    let nuovoConfronto = [...confronto, chicco];
-    setConfronto(nuovoConfronto);
+    if (chicco.origin && chicco.flavor && chicco.price) {
+      let nuovoConfronto = [...confronto, chicco];
+      setConfronto(nuovoConfronto);
 
-    // se ho 2 chicchi, apro il modal automaticamente
-    if (nuovoConfronto.length === 2) {
-      setModalOpen(true);
+      if (nuovoConfronto.length === 2) {
+        // Chiudo sidebar e apro modal solo quando aggiungo il secondo chicco
+        setSidebarOpen(false);
+        setModalOpen(true);
+      }
+      return;
+    }
+
+    try {
+      const { chicchiApi } = await import("./services/chicchiApi");
+      const response = await chicchiApi.getChicco(chicco.id);
+      const chiccoCompleto = response.data.chicco || response.data;
+
+      let nuovoConfronto = [...confronto, chiccoCompleto];
+      setConfronto(nuovoConfronto);
+
+      if (nuovoConfronto.length === 2) {
+        // Chiudo sidebar e apro modal solo quando aggiungo il secondo chicco
+        setSidebarOpen(false);
+        setModalOpen(true);
+      }
+    } catch (error) {
+      alert("Errore nel caricamento del chicco per il confronto");
     }
   };
 
@@ -68,26 +86,8 @@ function App() {
       <div className="App">
         <nav className="navbar">
           <Link to="/" className="logo">
-            ☕ Comparatore Chicchi
+            <img src="/images/sorsoscelto.png" alt="Logo Comparatore Chicchi" />
           </Link>
-          <div className="nav-info">
-            {/* Pulsante per aprire i favoriti */}
-            <button
-              className="btn-favoriti"
-              onClick={() => setSidebarOpen(true)}
-            >
-              ❤️ {favoriti.length}
-            </button>
-            | Confronto: {confronto.length}/2
-            {confronto.length === 2 && (
-              <button
-                className="btn-confronto"
-                onClick={() => setModalOpen(true)}
-              >
-                Vedi confronto!
-              </button>
-            )}
-          </div>
         </nav>
 
         <Routes>
@@ -99,6 +99,7 @@ function App() {
                 toggleFavorito={toggleFavorito}
                 confronto={confronto}
                 aggiungiConfronto={aggiungiConfronto}
+                setSidebarOpen={() => setSidebarOpen(true)}
               />
             }
           />
@@ -116,40 +117,44 @@ function App() {
         </Routes>
         <footer className="footer">
           <div className="footer-content">
-            <div className="footer-section">
-              <h3>☕ Comparatore Chicchi</h3>
+            <div className="footer-section logo-section">
+              <img
+                src="/images/Sorso_Scelto_copia-removebg-preview.png"
+                alt="Sorso Scelto Logo"
+                className="footer-logo"
+              />
               <p>
-                Il miglior tool per confrontare e scegliere i chicchi di caffè
-                perfetti per te!
+                Esplora, confronta e scopri i chicchi di caffè più pregiati. Per
+                veri intenditori.
               </p>
             </div>
 
             <div className="footer-section">
-              <h4>Navigazione</h4>
+              <h4>Menu</h4>
               <ul>
                 <li>
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="#about">Chi Siamo</a>
+                  <a href="#about">La Nostra Storia</a>
                 </li>
                 <li>
-                  <a href="#contact">Contatti</a>
+                  <a href="#contact">Contattaci</a>
                 </li>
               </ul>
             </div>
 
             <div className="footer-section">
-              <h4>Social</h4>
+              <h4>Seguici</h4>
               <div className="social-links">
                 <a href="#" className="social-link">
-                  📘 Facebook
+                  Facebook
                 </a>
                 <a href="#" className="social-link">
-                  📷 Instagram
+                  Instagram
                 </a>
                 <a href="#" className="social-link">
-                  🐦 Twitter
+                  Twitter
                 </a>
               </div>
             </div>
@@ -157,8 +162,8 @@ function App() {
 
           <div className="footer-bottom">
             <p>
-              &copy; 2025 Comparatore Chicchi. Fatto con ❤️ per gli amanti del
-              caffè
+              &copy; 2025 Sorso Scelto – Il gusto si sceglie, chicco dopo
+              chicco.
             </p>
           </div>
         </footer>
@@ -178,6 +183,7 @@ function App() {
           onClose={() => setSidebarOpen(false)}
           toggleFavorito={toggleFavorito}
           aggiungiConfronto={aggiungiConfronto}
+          confronto={confronto}
         />
       </div>
     </Router>

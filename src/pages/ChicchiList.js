@@ -2,27 +2,33 @@ import React, { useState, useEffect } from "react";
 import { chicchiApi } from "../services/chicchiApi";
 import { Link } from "react-router-dom";
 
-const coffeeImages = [
-  "/images/chicchi.1.jpg",
-  "/images/chicchi.2.jpg",
-  "/images/chicchi.3.webp",
-  "/images/chicchi.4.png",
-  "/images/chicchi-5.jpg",
-  "/images/chicchi.6.jpeg",
-  "/images/chicchi.7.jpg",
-  "/images/chicchi.8.jpg",
-  "/images/chicchi.9.jpg",
-  "/images/chicchi.10.png",
-  "/images/chicchi.11.jpg",
-  "/images/chicchi.12.webp",
-];
+const getChiccoImage = (id) => {
+  const imageMap = {
+    1: "/images/chicchi.1.jpg",
+    2: "/images/chicchi.2.jpg",
+    3: "/images/chicchi.3.webp",
+    4: "/images/chicchi.4.png",
+    5: "/images/chicchi.5.jpg",
+    6: "/images/chicchi.6.jpeg",
+    7: "/images/chicchi.7.jpg",
+    8: "/images/chicchi.8.jpg",
+    9: "/images/chicchi.9.jpg",
+    10: "/images/chicchi.10.png",
+    11: "/images/chicchi.11.jpg",
+    12: "/images/chicchi.12.webp",
+  };
+  return imageMap[id] || "/images/chicchi.1.jpg";
+};
 
 function ChicchiList({
   favoriti,
   toggleFavorito,
   confronto,
   aggiungiConfronto,
+  sidebarOpen,
+  setSidebarOpen,
 }) {
+  console.log("setSidebarOpen ricevuta:", setSidebarOpen);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -116,17 +122,20 @@ function ChicchiList({
           <option value="category-asc">Categoria A-Z</option>
           <option value="category-desc">Categoria Z-A</option>
         </select>
+        <button className="btn-favoriti" onClick={() => setSidebarOpen(true)}>
+          ❤️ {favoriti.length}
+        </button>
       </div>
 
       <div className="chicchi-grid">
         {filtered.map((chicco) => (
           <div
             key={chicco.id}
-            className="chicco-card-bg"
+            className={`chicco-card-bg ${
+              confronto.some((c) => c.id === chicco.id) ? "in-confronto" : ""
+            }`}
             style={{
-              backgroundImage: `url(${
-                coffeeImages[chicco.id % coffeeImages.length]
-              })`,
+              backgroundImage: `url(${getChiccoImage(chicco.id)})`,
             }}
           >
             <div className="chicco-overlay">
