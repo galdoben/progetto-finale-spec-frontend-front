@@ -6,8 +6,9 @@ function ModalConfronto({ confronto, setConfronto, isOpen, onClose }) {
   const chicco1 = confronto[0];
   const chicco2 = confronto[1];
 
-  console.log("chicco1 completo:", JSON.stringify(chicco1, null, 2));
-  console.log("chicco2 completo:", JSON.stringify(chicco2, null, 2));
+  //console.log("chicco1 completo:", JSON.stringify(chicco1, null, 2));
+  //console.log("chicco2 completo:", JSON.stringify(chicco2, null, 2));
+  //Indentazione di 2 spazi per formattazione leggibile
   const getChiccoImage = (id) => {
     const imageMap = {
       1: "/images/chicchi.1.jpg",
@@ -24,13 +25,6 @@ function ModalConfronto({ confronto, setConfronto, isOpen, onClose }) {
       12: "/images/chicchi.12.webp",
     };
     return imageMap[id] || "/images/chicchi.1.jpg";
-  };
-
-  const getCategoryColor = (category) => {
-    if (category === "Premium") return "#daa520";
-    if (category === "Specialty") return "#8b4513";
-    if (category === "Organic") return "#228b22";
-    return "#cd853f";
   };
 
   const nuovoConfronto = () => {
@@ -54,12 +48,7 @@ function ModalConfronto({ confronto, setConfronto, isOpen, onClose }) {
               <img src={getChiccoImage(chicco1.id)} alt={chicco1.title} />
             </div>
             <h3>{chicco1.title}</h3>
-            <div
-              className="badge-categoria"
-              style={{ backgroundColor: getCategoryColor(chicco1.category) }}
-            >
-              {chicco1.category}
-            </div>
+            <div className="badge-categoria">{chicco1.category}</div>
 
             <div className="info-chicco">
               <div className="info-riga">
@@ -90,12 +79,7 @@ function ModalConfronto({ confronto, setConfronto, isOpen, onClose }) {
               <img src={getChiccoImage(chicco2.id)} alt={chicco2.title} />
             </div>
             <h3>{chicco2.title}</h3>
-            <div
-              className="badge-categoria"
-              style={{ backgroundColor: getCategoryColor(chicco2.category) }}
-            >
-              {chicco2.category}
-            </div>
+            <div className="badge-categoria">{chicco2.category}</div>
 
             <div className="info-chicco">
               <div className="info-riga">

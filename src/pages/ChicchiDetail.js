@@ -176,21 +176,6 @@ function ChicchiDetail({
     return favoriti.some((f) => f.id == chicco.id);
   };
 
-  // funzione per i colori delle categorie
-  const getCategoryColor = (category) => {
-    if (category === "Premium") {
-      return "#daa520";
-    } else if (category === "Specialty") {
-      return "#8b4513";
-    } else if (category === "Organic") {
-      return "#228b22";
-    } else if (category === "Standard") {
-      return "#cd853f";
-    } else {
-      return "#8b4513";
-    }
-  };
-
   // stelline per la tostatura
   const getRoastStars = (roastLevel) => {
     if (roastLevel === "light") {
@@ -218,12 +203,7 @@ function ChicchiDetail({
         {/* Header con titolo e categoria */}
         <div className="detail-header">
           <h1>☕ {chicco.title}</h1>
-          <span
-            className="detail-category-badge"
-            style={{ backgroundColor: getCategoryColor(chicco.category) }}
-          >
-            {chicco.category}
-          </span>
+          <span className="detail-category-badge">{chicco.category}</span>
         </div>
 
         {/*2 colonne */}
@@ -251,7 +231,7 @@ function ChicchiDetail({
             </div>
           </div>
 
-          {/* Colonna destra - Informazioni dettagliate */}
+          {/* Colonna dx */}
           <div className="detail-right">
             {/* Card origine e provenienza */}
             <div className="info-card origin-card">
@@ -318,7 +298,7 @@ function ChicchiDetail({
           </div>
         </div>
 
-        {/* Bottoni azioni in fondo */}
+        {/* Bottoni */}
         <div className="detail-buttons">
           <button
             className={`btn-favorite-detail ${isFavorito() ? "favorito" : ""}`}
@@ -338,5 +318,4 @@ function ChicchiDetail({
     </div>
   );
 }
-
 export default ChicchiDetail;

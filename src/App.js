@@ -51,33 +51,28 @@ function App() {
       return;
     }
 
-    if (chicco.origin && chicco.flavor && chicco.price) {
-      let nuovoConfronto = [...confronto, chicco];
-      setConfronto(nuovoConfronto);
+    // Determina quale chicco usare
+    let chiccoFinale = chicco;
 
-      if (nuovoConfronto.length === 2) {
-        // Chiudo sidebar e apro modal solo quando aggiungo il secondo chicco
-        setSidebarOpen(false);
-        setModalOpen(true);
+    // Se mancano dati, carica dall'API
+    if (!chicco.origin || !chicco.flavor || !chicco.price) {
+      try {
+        const { chicchiApi } = await import("./services/chicchiApi");
+        const response = await chicchiApi.getChicco(chicco.id);
+        chiccoFinale = response.data.chicco || response.data;
+      } catch (error) {
+        alert("Errore nel caricamento del chicco per il confronto");
+        return;
       }
-      return;
     }
 
-    try {
-      const { chicchiApi } = await import("./services/chicchiApi");
-      const response = await chicchiApi.getChicco(chicco.id);
-      const chiccoCompleto = response.data.chicco || response.data;
+    let nuovoConfronto = [...confronto, chiccoFinale];
+    setConfronto(nuovoConfronto);
 
-      let nuovoConfronto = [...confronto, chiccoCompleto];
-      setConfronto(nuovoConfronto);
-
-      if (nuovoConfronto.length === 2) {
-        // Chiudo sidebar e apro modal solo quando aggiungo il secondo chicco
-        setSidebarOpen(false);
-        setModalOpen(true);
-      }
-    } catch (error) {
-      alert("Errore nel caricamento del chicco per il confronto");
+    if (nuovoConfronto.length === 2) {
+      // Chiudo sidebar e apro modal solo quando aggiungo il secondo chicco
+      setSidebarOpen(false);
+      setModalOpen(true);
     }
   };
 
@@ -164,6 +159,9 @@ function App() {
             <p>
               &copy; 2025 Sorso Scelto – Il gusto si sceglie, chicco dopo
               chicco.
+            </p>
+            <p className="footer-credit">
+              Creato con ☕ da <strong>Benedetta Galdo</strong>
             </p>
           </div>
         </footer>

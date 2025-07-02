@@ -15,20 +15,15 @@ function SidebarFavoriti({
 
   return (
     <>
-      {/* Overlay scuro che copre tutto lo schermo */}
       <div className="sidebar-overlay" onClick={onClose}></div>
 
-      {/* La sidebar vera e propria */}
       <div className="sidebar-favoriti">
-        {/* Header della sidebar */}
         <div className="sidebar-header">
           <h2>❤️ I Miei Favoriti</h2>
           <button className="close-btn" onClick={onClose}>
             ✕
           </button>
         </div>
-
-        {/* Contenuto della sidebar */}
         <div className="sidebar-content">
           {favoriti.length === 0 ? (
             // Se non ci sono favoriti
@@ -52,9 +47,7 @@ function SidebarFavoriti({
                   <h3>{chicco.title}</h3>
                   <p className="favorite-category">{chicco.category}</p>
 
-                  {/* Bottoni per ogni favorito */}
                   <div className="favorite-actions">
-                    {/* Vai ai dettagli */}
                     <Link
                       to={`/chicco/${chicco.id}`}
                       className="btn-dettaglio"
@@ -62,16 +55,12 @@ function SidebarFavoriti({
                     >
                       Vedi dettagli
                     </Link>
-
-                    {/* Aggiungi al confronto */}
                     <button
                       className="btn-confronto-small"
                       onClick={() => aggiungiConfronto(chicco)}
                     >
                       Confronta
                     </button>
-
-                    {/* Rimuovi dai favoriti */}
                     <button
                       className="btn-rimuovi"
                       onClick={() => toggleFavorito(chicco)}

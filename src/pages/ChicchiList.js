@@ -28,7 +28,7 @@ function ChicchiList({
   sidebarOpen,
   setSidebarOpen,
 }) {
-  console.log("setSidebarOpen ricevuta:", setSidebarOpen);
+  //console.log("setSidebarOpen ricevuta:", setSidebarOpen);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
